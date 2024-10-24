@@ -6,18 +6,19 @@ import res.AppData;
 import res.models.ScreenModel;
 
 public class Home extends ScreenModel {
-    public Home(Scanner sc, AppData appData) {
-        scanner = sc;
-        this.appData = appData;
-    }
-
     AppData appData;
     private Scanner scanner;
     private String[] optionsNames = {
             "transferência",
             "carteira de investimentos",
             "sua conta",
+            "carrinho",
             "sair" };
+
+    public Home(Scanner sc, AppData appData) {
+        scanner = sc;
+        this.appData = appData;
+    }
 
     public String[] getOptionsNames() {
         return this.optionsNames;
@@ -33,11 +34,14 @@ public class Home extends ScreenModel {
         }
 
         System.out.print(ANSI_YELLOW + "resposta: " + ANSI_RESET);
-        return scanner.nextInt();
+        int selectedOption = scanner.nextInt();
+        System.out.println();
+
+        return selectedOption;
     }
 
     public void execOption(int chosenOption) {
-        if (chosenOption == 4)
+        if (chosenOption == optionsNames.length)
             appData.setAppOn(false);
     }
 }

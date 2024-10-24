@@ -6,11 +6,6 @@ import res.AppData;
 import res.models.ScreenModel;
 
 public class Investiments extends ScreenModel {
-    public Investiments(Scanner sc, AppData appData) {
-        scanner = sc;
-        this.appData = appData;
-    }
-
     AppData appData;
     private Scanner scanner;
     private String[] optionsNames = {
@@ -18,6 +13,11 @@ public class Investiments extends ScreenModel {
             "comprar ações",
             "vender ações",
             "votar" };
+
+    public Investiments(Scanner sc, AppData appData) {
+        scanner = sc;
+        this.appData = appData;
+    }
 
     public String[] getOptionsNames() {
         return this.optionsNames;
@@ -58,7 +58,10 @@ public class Investiments extends ScreenModel {
 
         }
         System.out.print(ANSI_YELLOW + "resposta: " + ANSI_RESET);
-        return scanner.nextInt();
+        int selectedOption = scanner.nextInt();
+        System.out.println();
+
+        return selectedOption;
     }
 
     public void execOption(int chosenOption) {

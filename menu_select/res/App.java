@@ -14,13 +14,15 @@ public class App {
         Home homePage = new Home(sc, appData);
         Transactions transactionsPage = new Transactions(sc, appData, user);
         Investiments investimentsPage = new Investiments(sc, appData);
-        Account AccountPage = new Account(sc, appData, user);
+        Account accountPage = new Account(sc, appData, user);
+        ShoppingCart cartPage = new ShoppingCart(sc, appData, user);
 
         ScreenModel[] screens = {
                 homePage,
                 transactionsPage,
                 investimentsPage,
-                AccountPage };
+                accountPage,
+                cartPage };
 
         appData.setAppOn(true);
 

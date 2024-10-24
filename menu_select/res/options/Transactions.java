@@ -7,37 +7,51 @@ import res.User;
 import res.models.ScreenModel;
 
 public class Transactions extends ScreenModel {
+
+    private AppData appData;
+    private User user;
+    private Scanner scanner;
+    private String[] optionsNames = {
+            "enviar dinheiro",
+            "receber dinheiro",
+            "voltar" };
+
     public Transactions(Scanner scanner, AppData appData, User user) {
         this.scanner = scanner;
         this.appData = appData;
         this.user = user;
     }
 
-    private AppData appData;
-    private User user;
-    private Scanner scanner;
-    private String[] optionsNames = {
-            "enviar pix",
-            "gerar codigo pix",
-            "voltar" };
-
     public String[] getOptionsNames() {
         return this.optionsNames;
     }
 
-    void sendPix(User user) {
+    void sendCash() {
         System.out.print(ANSI_YELLOW + "Insera o valor a ser transferido: " + ANSI_RESET);
         double value = scanner.nextDouble();
+        sendCash(value);
+    }
+
+    boolean sendCash(double value) {
         if (user.getBalance() >= value) {
             user.setBalance(user.getBalance() - value);
             System.out.println(ANSI_GREEN + "transação realizada" + ANSI_RESET);
-        } else {
-            System.out.println(ANSI_RED + "saldo insuficiente" + ANSI_RESET);
+            return true;
         }
+        System.out.println(ANSI_RED + "saldo insuficiente" + ANSI_RESET);
+        return false;
     }
 
-    void generatePixCode() {
-        System.out.println(ANSI_GREEN + "codigo gerado: " + Math.random() + ANSI_RESET);
+    void reciveCash(double value) {
+        user.setBalance(user.getBalance() + value);
+        System.out.println(ANSI_GREEN + "valor recebido: " + value + ANSI_RESET);
+    }
+
+    void reciveCash() {
+        System.out.print(ANSI_YELLOW + "valor a receber: " + ANSI_RESET);
+        double value = scanner.nextDouble();
+
+        user.setBalance(user.getBalance() + value);
     }
 
     public int chooseOption() {
@@ -45,25 +59,27 @@ public class Transactions extends ScreenModel {
         System.out.println("====================");
 
         for (int i = 0; i < optionsNames.length; i++) {
-            System.out.println(i + 1 + ") " + optionsNames[i]);
+            System.out.println((i + 1) + ") " + optionsNames[i]);
         }
 
         System.out.print(ANSI_YELLOW + "resposta: " + ANSI_RESET);
-        return scanner.nextInt();
+        int selectedOption = scanner.nextInt();
+        System.out.println();
+
+        return selectedOption;
     }
 
     public void execOption(int chosenOption) {
         switch (chosenOption) {
             case 1:
-                sendPix(user);
+                sendCash();
                 break;
             case 2:
-                generatePixCode();
+                reciveCash();
                 break;
             case 3:
                 backHome(appData);
                 break;
-
             default:
                 break;
         }

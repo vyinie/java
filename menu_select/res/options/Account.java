@@ -7,13 +7,6 @@ import res.User;
 import res.models.ScreenModel;
 
 public class Account extends ScreenModel {
-
-    public Account(Scanner scanner, AppData appData, User user) {
-        this.scanner = scanner;
-        this.appData = appData;
-        this.user = user;
-    }
-
     private AppData appData;
     private User user;
     private Scanner scanner;
@@ -22,6 +15,12 @@ public class Account extends ScreenModel {
             "termos de uso",
             "sair desta conta",
             "votar" };
+
+    public Account(Scanner scanner, AppData appData, User user) {
+        this.scanner = scanner;
+        this.appData = appData;
+        this.user = user;
+    }
 
     public String[] getOptionsNames() {
         return this.optionsNames;
@@ -53,7 +52,10 @@ public class Account extends ScreenModel {
 
         }
         System.out.print(ANSI_YELLOW + "resposta: " + ANSI_RESET);
-        return scanner.nextInt();
+        int selectedOption = scanner.nextInt();
+        System.out.println();
+
+        return selectedOption;
     }
 
     public void execOption(int chosenOption) {
